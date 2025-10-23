@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Work To-Do List</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        * { box-sizing: border-box; font-family: Arial, sans-serif; }
+        body {
+            background-color: #0097A7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+        }
+        .todo-container {
+            background-color: #0097A7;
+            width: 600px;
+            padding: 30px;
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 10px;
+            font-size: 32px;
+            font-weight: bold;
+        }
+        p {
+            margin: 5px 0;
+        }
+        .input-group {
+            display: flex;
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 16px;
+        }
+        button.add-btn {
+            background-color: #00796B;
+            border: none;
+            color: white;
+            padding: 0 20px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        li {
+            background-color: #4DD0E1;
+            color: #fff;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        li.completed {
+            background-color: #66BB6A;
+        }
+        li button {
+            background-color: #00838F;
+            border: none;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        li button:hover {
+            background-color: #006064;
+        }
+    </style>
+</head>
+<body>
+
+<div class="todo-container">
+    <h1>WORK TO-DOS</h1>
+    <p><strong>Enter text into the input field to add items to your list.</strong></p>
+    <p style="color: #AEEA00;">Click the item to mark it as complete.</p>
+    <p style="color: #80DEEA;">Click the "X" to remove the item from your list.</p>
+
+    <div class="input-group">
+        <input type="text" id="todo-input" placeholder="New item...">
+        <button class="add-btn">✏️</button>
+    </div>
+
+    <ul id="todo-list">
+        <li class="completed">Làm Bài Tập Làm Thêm <button class="delete">X</button></li>
+        <li>Học Lập Trình Web <button class="delete">X</button></li>
+    </ul>
+</div>
+
+<script>
+$(document).ready(function() {
+    // Thêm item
+    $(".add-btn").click(function() {
+        let newItem = $("#todo-input").val().trim();
+        if (newItem !== "") {
+            $("#todo-list").append(
+                "<li>" + newItem + " <button class='delete'>X</button></li>"
+            );
+            $("#todo-input").val("");
+        } else {
+            alert("Vui lòng nhập công việc!");
+        }
+    });
+
+    // Đánh dấu hoàn thành khi click vào item
+    $(document).on("click", "#todo-list li", function(e) {
+        if (!$(e.target).hasClass("delete")) {
+            $(this).toggleClass("completed");
+        }
+    });
+
+    // Xóa item
+    $(document).on("click", ".delete", function(e) {
+        e.stopPropagation();
+        $(this).parent().remove();
+    });
+});
+</script>
+
+</body>
+</html>
